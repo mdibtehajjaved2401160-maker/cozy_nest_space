@@ -1,0 +1,221 @@
+<style>
+    .custom-footer {
+        background-color: #5D4037;
+        color: #ffffff;
+        padding: 40px 20px;
+        font-family: inherit;
+    }
+
+    .footer-grid {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        gap: 40px;
+        align-items: start;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .footer-intro {
+        text-align: left;
+    }
+
+    .footer-intro h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 28px;
+        margin-bottom: 12px;
+        letter-spacing: 0.4px;
+        font-weight: 700;
+    }
+
+    .footer-intro p {
+        font-family: "Playfair Display", serif;
+        font-size: 16px;
+        line-height: 1.9;
+        color: #D7CCC8;
+        max-width: 520px;
+        letter-spacing: 0.02em;
+    }
+
+    .footer-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        justify-content: center;
+        align-items: stretch;
+    }
+
+    .footer-actions h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 24px;
+        margin-bottom: 10px;
+        font-weight: 700;
+        letter-spacing: 0.2px;
+    }
+
+    .footer-actions p {
+        font-family: "Playfair Display", serif;
+        font-size: 15px;
+        color: #D7CCC8;
+        margin-bottom: 0;
+        letter-spacing: 0.02em;
+    }
+
+    .custom-footer form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .custom-footer form input[type="text"],
+    .custom-footer form input[type="email"] {
+        padding: 12px 14px;
+        border: 1px solid rgba(255,255,255,0.18);
+        border-radius: 8px;
+        width: calc(50% - 10px);
+        min-width: 140px;
+        background: rgba(255,255,255,0.06);
+        color: #ffffff;
+    }
+
+    .custom-footer form input::placeholder {
+        color: #D7CCC8;
+    }
+
+    .custom-footer button {
+        background-color: #8D6E63;
+        color: white;
+        border: none;
+        padding: 12px 26px;
+        cursor: pointer;
+        border-radius: 8px;
+        font-weight: 700;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        min-width: 150px;
+    }
+
+    .custom-footer button:hover {
+        background-color: #A37B6C;
+        transform: translateY(-1px);
+    }
+
+    .footer-social {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        align-items: center;
+    }
+
+    .footer-social a {
+        width: 48px;
+        height: 48px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 14px;
+        background: rgba(255,255,255,0.20);
+        border: 1px solid rgba(255,255,255,0.22);
+        color: #ffffff;
+        text-decoration: none;
+        transition: background-color 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .footer-social a:hover {
+        background: #8D6E63;
+        border-color: rgba(255,255,255,0.35);
+        transform: translateY(-2px);
+    }
+
+    .footer-social svg {
+        width: 28px;
+        height: 28px;
+        fill: currentColor;
+        shape-rendering: geometricPrecision;
+    }
+
+    .footer-bottom {
+        margin-top: 28px;
+        text-align: left;
+        color: #A1887F;
+        font-size: 14px;
+    }
+
+    @media (max-width: 900px) {
+        .footer-grid {
+            grid-template-columns: 1fr;
+        }
+        .custom-footer form input[type="text"],
+        .custom-footer form input[type="email"] {
+            width: 100%;
+        }
+        .footer-actions {
+            align-items: stretch;
+        }
+    }
+
+    /* --- ADDED FOR MOBILE RESPONSIVENESS --- */
+    @media (max-width: 576px) {
+        .custom-footer {
+            padding: 30px 15px;
+        }
+        .footer-intro h3 {
+            font-size: 24px;
+        }
+        .footer-actions h3 {
+            font-size: 20px;
+        }
+        .custom-footer button {
+            width: 100%;
+        }
+    }
+</style>
+
+<footer class="custom-footer">
+    <div class="footer-grid">
+        <div class="footer-intro">
+            <h3>Design inspiration for every home.</h3>
+            <p>Join Cozy Nest Space to receive thoughtful design ideas, styling updates, and curated home décor trends directly to your inbox. Our newsletter is crafted for modern living with soulful textures and elegant finishes.</p>
+        </div>
+
+        <div class="footer-actions">
+            <div>
+                <h3>Newsletter</h3>
+                <p>Subscribe for fresh inspiration and premium interior tips.</p>
+            </div>
+
+            <form action="/subscribe" method="POST">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <button type="submit">Subscribe</button>
+            </form>
+
+            <div class="footer-social">
+                <a href="https://www.youtube.com" target="_blank" rel="noreferrer" aria-label="YouTube">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2.5" y="6" width="19" height="12" rx="4.5" stroke="currentColor" stroke-width="1.9" fill="none" />
+                        <path d="M10 8.8l5 3.2-5 3.2V8.8z" fill="currentColor" />
+                    </svg>
+                </a>
+                <a href="https://www.instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="4" y="4" width="16" height="16" rx="5" stroke="currentColor" stroke-width="1.9" fill="none" />
+                        <circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.9" fill="none" />
+                        <circle cx="17" cy="7" r="1" fill="currentColor" />
+                    </svg>
+                </a>
+                <a href="https://www.facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 3h-2.5c-2.2 0-3.5 1.3-3.5 3.5V10H7v3h2V21h3v-8h2.5l.5-3H12V6.5c0-.7.3-1.5 1.5-1.5H15V3Z" fill="currentColor" />
+                    </svg>
+                </a>
+                <a href="https://www.pinterest.com" target="_blank" rel="noreferrer" aria-label="Pinterest">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C7.03 2 3 6.03 3 11c0 5 3.22 9.22 7.65 10-.05-.63-.09-1.58.02-2.26.1-.6.7-3.6.7-3.6s-.16-.65-.16-1.6c0-1.5.88-2.6 1.98-2.6.93 0 1.38.7 1.38 1.55 0 .95-.6 2.37-.9 3.69-.26 1.1.55 2 1.6 2 1.92 0 3.4-2 3.4-4.88 0-2.54-1.83-4.32-4.45-4.32-3.03 0-4.8 2.27-4.8 4.62 0 1.05.4 1.78.96 2.34.1.12.12.18.08.33-.08.34-.26 1.08-.3 1.24-.05.2-.15.26-.34.16-1.27-.59-2.07-2.45-2.07-3.94 0-3.21 2.33-6.15 6.73-6.15 3.55 0 5.96 2.54 5.96 5.93 0 3.54-2.22 6.39-5.31 6.39-1.04 0-2.02-.54-2.36-1.17l-.64 2.45c-.23.87-.86 1.96-1.28 2.63C9.7 21.86 10.83 22 12 22c4.97 0 9-4.03 9-9s-4.03-9-9-9z" fill="currentColor" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">&copy; 2026 Cozy Nest Space</div>
+</footer>

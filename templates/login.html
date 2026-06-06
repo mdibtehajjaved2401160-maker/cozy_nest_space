@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Cozy Nest Space</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { background-color: #fcf9f5; color: #4e342e; font-family: "Inter", sans-serif; }
+        .main-navbar { background-color: #ffffff; border-bottom: 1px solid #eaddd7; padding: 18px 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.04); }
+        .nav-wrapper { display: flex; justify-content: space-between; align-items: center; }
+        .site-logo { font-size: 28px; text-decoration: none; color: #4e342e !important; font-family: "Playfair Display", serif; font-weight: 500; letter-spacing: -0.5px; }
+        .nav-menu { display: flex; gap: 25px; }
+        .menu-link { font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; color: #4e342e; text-decoration: none; }
+        .nav-icons-group { display: flex; align-items: center; gap: 20px; }
+        .icon-link { color: #4e342e; text-decoration: none; display: flex; align-items: center; cursor: pointer; }
+        .login-box { background: linear-gradient(180deg, #ffffff 0%, #fbf5f0 100%); padding: 44px; border-radius: 20px; border: 1px solid rgba(141,110,99,0.18); box-shadow: 0 20px 40px rgba(76, 45, 33, 0.08); max-width: 520px; margin: 50px auto; }
+        .login-step { font-size: 12px; text-transform: uppercase; letter-spacing: 1.8px; color: #8d6e63; font-weight: 700; margin-bottom: 10px; }
+        .login-intro { font-family: "Playfair Display", serif; font-size: 30px; letter-spacing: -0.6px; margin-bottom: 10px; color: #4e342e; }
+        .login-subtitle { margin-bottom: 32px; color: #6b4f42; line-height: 1.75; font-size: 15px; }
+        .tab-btn { border: none; background: #f3ede8; padding: 10px 20px; border-radius: 10px; margin-right: 12px; cursor: pointer; font-weight: 600; color: #5d4037; transition: all 0.25s ease; }
+        .tab-btn:hover { background: #e8ddd7; }
+        .tab-btn.active { background: #8d6e63; color: white; }
+        .form-section { display: none; }
+        .form-section.active { display: block; }
+        .form-floating .form-control { border-radius: 14px; border: 1px solid #d7ccc8; padding: 22px 18px 10px; height: 55px; background: #fff; }
+        .form-floating .form-control:focus { box-shadow: 0 0 0 0.15rem rgba(141, 110, 99, 0.16); border-color: #b38e7d; }
+        .form-floating label { color: #7a5b4d; font-weight: 500; }
+        .interest-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+        .interest-chip { display: block; position: relative; padding: 14px 16px; border: 1px solid #e6d7cf; border-radius: 14px; background: #fff; color: #5d4037; font-weight: 600; cursor: pointer; transition: all 0.25s ease; }
+        .interest-chip input { position: absolute; opacity: 0; pointer-events: none; }
+        .interest-chip::after { content: ""; position: absolute; top: 16px; right: 16px; width: 16px; height: 16px; border-radius: 5px; border: 1px solid #d7ccc8; background: #fff; }
+        .interest-chip.selected { background: rgba(141, 110, 99, 0.08); border-color: #8d6e63; }
+        .interest-chip.selected::after { background: #8d6e63; border-color: #8d6e63; }
+        .form-note { display: block; margin-top: 10px; font-size: 13px; color: #7a5b4d; }
+        .btn-custom { background-color: #8d6e63; color: white; border: none; padding: 14px; width: 100%; border-radius: 14px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; transition: background-color 0.25s ease, transform 0.25s ease; }
+        .btn-custom:hover { background-color: #6d4f41; transform: translateY(-1px); }
+        .user-cta { margin-top: 18px; text-align: center; color: #7a5b4d; font-size: 14px; }
+
+        /* --- ADDED FOR RESPONSIVENESS --- */
+        @media (max-width: 576px) {
+            .site-logo { font-size: 20px; }
+            .login-box { padding: 25px 20px; margin: 20px auto; }
+            .login-intro { font-size: 24px; }
+            .interest-grid { grid-template-columns: 1fr; }
+            .tab-btn { padding: 8px 12px; font-size: 13px; margin-right: 6px; }
+            .login-subtitle { font-size: 14px; margin-bottom: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="main-navbar">
+    <div class="container nav-wrapper">
+        <a class="site-logo" href="/">Cozy Nest Space</a>
+        <div class="nav-icons-group">
+            <a href="/" class="icon-link" title="Home"><i data-lucide="home"></i></a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="login-box">
+        {% if active_login == 'both' %}
+        <div class="d-flex mb-4 justify-content-center">
+            <button class="tab-btn active" onclick="switchTab('user', this)"><i data-lucide="user"></i> User</button>
+            <button class="tab-btn" onclick="switchTab('admin', this)"><i data-lucide="user-cog"></i> Admin</button>
+        </div>
+        {% endif %}
+
+        <h3 class="text-center mb-4" style="font-family: 'Playfair Display';">
+            {% if active_login == 'admin' %}Admin Sign In{% else %}User Login{% endif %}
+        </h3>
+
+        <form method="POST" id="userForm" class="form-section {% if active_login == 'user' or active_login == 'both' %}active{% endif %}" {% if active_login == 'admin' %}style="display:none;"{% endif %}>
+            <input type="hidden" name="login_type" value="user">
+            <div class="login-step">User Login</div>
+            <h3 class="login-intro">Create a beautiful browsing experience</h3>
+            <p class="login-subtitle">Sign in and store the interior styles you love. Your favorite inspirations are just one click away.</p>
+            <div class="row g-3">
+                <div class="col-12 form-floating">
+                    <input type="text" name="name" class="form-control" id="nameInput" placeholder="Your full name" required>
+                    <label for="nameInput">Full Name</label>
+                </div>
+                <div class="col-12 form-floating">
+                    <input type="email" name="email" class="form-control" id="emailInput" placeholder="name@cozynest.com" required>
+                    <label for="emailInput">Email Address</label>
+                </div>
+                <div class="col-12 col-md-6 form-floating">
+                    <input type="number" name="age" class="form-control" id="ageInput" placeholder="Age" min="12" max="120" required>
+                    <label for="ageInput">Age</label>
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Interests (Select 3-5)</label>
+                    <div class="interest-grid">
+                        <label class="interest-chip"><input type="checkbox" name="interests" value="Animals">Animals</label>
+                        <label class="interest-chip"><input type="checkbox" name="interests" value="Architecture">Architecture</label>
+                        <label class="interest-chip"><input type="checkbox" name="interests" value="Art">Art</label>
+                        <label class="interest-chip"><input type="checkbox" name="interests" value="Beauty">Beauty</label>
+                        <label class="interest-chip"><input type="checkbox" name="interests" value="DIY and Crafts">DIY and Crafts</label>
+                        <label class="interest-chip"><input type="checkbox" name="interests" value="Education">Education</label>
+                        <label class="interest-chip"><input type="checkbox" name="interests" value="Event Planning">Event Planning</label>
+                        <label class="interest-chip"><input type="checkbox" name="interests" value="Fashion">Fashion</label>
+                        <label class="interest-chip"><input type="checkbox" name="interests" value="Food and Drinks">Food and Drinks</label>
+                        <label class="interest-chip"><input type="checkbox" name="interests" value="Gardening">Gardening</label>
+                        <label class="interest-chip"><input type="checkbox" name="interests" value="Health">Health</label>
+                        <label class="interest-chip"><input type="checkbox" name="interests" value="Home Decor">Home Decor</label>
+                        <label class="interest-chip"><input type="checkbox" name="interests" value="Parenting">Parenting</label>
+                        <label class="interest-chip"><input type="checkbox" name="interests" value="Travel">Travel</label>
+                        <label class="interest-chip"><input type="checkbox" name="interests" value="Wedding">Wedding</label>
+                    </div>
+                    <span class="form-note">Choose the interior styles that inspire your next room refresh.</span>
+                </div>
+            </div>
+            <button type="submit" class="btn-custom">Start Exploring</button>
+            <p class="user-cta">Your profile will keep your favorite looks ready whenever you return.</p>
+        </form>
+
+        <form method="POST" id="adminForm" class="form-section {% if active_login == 'admin' or active_login == 'both' %}active{% endif %}" {% if active_login == 'user' %}style="display:none;"{% endif %}>
+            <input type="hidden" name="login_type" value="admin">
+            <div class="mb-3"><label>Username</label><input type="text" name="username" class="form-control" required></div>
+            <div class="mb-4"><label>Password</label><input type="password" name="password" class="form-control" required></div>
+            <button type="submit" class="btn-custom">Admin Sign In</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    lucide.createIcons();
+    function switchTab(type, button) {
+        document.querySelectorAll('.form-section').forEach(f => f.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(type + 'Form').classList.add('active');
+        if (button) button.classList.add('active');
+    }
+    document.querySelectorAll('.interest-chip').forEach(chip => {
+        chip.addEventListener('click', function() {
+            const input = chip.querySelector('input');
+            input.checked = !input.checked;
+            chip.classList.toggle('selected', input.checked);
+        });
+    });
+    document.getElementById('userForm').onsubmit = function() {
+        const selected = Array.from(document.querySelectorAll('input[name="interests"]:checked'));
+        if (selected.length < 3 || selected.length > 5) {
+            alert('Please select between 3 and 5 interests!');
+            return false;
+        }
+    };
+</script>
+</body>
+</html>
