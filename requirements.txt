@@ -3,3 +3,4 @@ scapy==2.5.0
 mac-vendor-lookup==0.1.12
 gunicorn==21.2.0
 cloudinary
+requests
